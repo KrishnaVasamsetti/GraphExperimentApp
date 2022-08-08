@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<layout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-    <com.example.graphexperimentapp.HorizontalBarChart
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.example.graphexperimentapp.HorizontalBarChart
+                android:id="@+id/horizontal_barchart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:axisLineColor="@{@color/purple_500}"
+                app:axisLineStroke="@{@dimen/axisLineStroke}"
+                app:innerCircleColor="@{@color/purple_200}"
+                app:innerCircleRadius="@{@dimen/innerCircleRadius}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:outerCircleColor="@{@color/purple_200}"
+                app:outerCircleRadius="@{@dimen/outerCircleRadius}"
+                app:outerCircleStroke="@{@dimen/outerCircleStroke}"
+                app:valueLineColor="@{@color/purple_700}"
+                app:valueLineStroke="@{@dimen/valueLineStroke}"
+                app:valueTextColor="@{@color/purple_500}"
+                app:valueTextSize="@{@dimen/value_text_size}"
+                app:xAxisNameColor="@{@color/purple_500}"
+                app:xAxisTextSize="@{@dimen/x_axis_text_size}"
+                app:yAxisNameColor="@{@color/purple_500}"
+                app:yAxisTextSize="@{@dimen/y_axis_text_size}" />
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

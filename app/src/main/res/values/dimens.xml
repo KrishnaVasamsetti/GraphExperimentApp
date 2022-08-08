@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="x_axis_text_size">16sp</dimen>
+    <dimen name="y_axis_text_size">12sp</dimen>
+    <dimen name="value_text_size">10sp</dimen>
+
+    <dimen name="innerCircleRadius">2dp</dimen>
+    <dimen name="outerCircleRadius">10dp</dimen>
+    <dimen name="outerCircleStroke">3dp</dimen>
+
+    <dimen name="valueLineStroke">2dp</dimen>
+    <dimen name="axisLineStroke">5dp</dimen>
+
+
+</resources>
