@@ -15,5 +15,20 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
 
+//        binding.horizontalBarchart.graphDataAsInfoList(
+//            listOf<HorizontalBarChart.GraphDataInfo>(
+//                GraphInfo("T", 76f),
+//                GraphInfo("E", 23F),
+//                GraphInfo("SCI", 43f),
+//                GraphInfo("SS", 98f),
+//            )
+//        )
+
     }
+}
+
+private data class GraphInfo(private val myKey: String, val myValue: Float):
+    HorizontalBarChart.GraphDataInfo {
+    override fun getKey() = myKey
+    override fun getValue() = myValue
 }

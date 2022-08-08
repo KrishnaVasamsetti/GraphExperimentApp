@@ -17,32 +17,23 @@ import java.util.*
 
 class HorizontalBarChart : View {
 
-    private var screenWidth = 1000F
-    private var screenHeight = 500F
+    private var screenWidth = 1000F // default screen width
+    private var screenHeight = 500F // default screen height
 
-    var startPaddingPercent = 0.25F
-    var endPaddingPercent = 0.1F
-    var topPaddingPercent = 0.1F
-    var bottomPaddingPercent = 0.1F
+    internal var innerCircleRadius = 6F
+    internal var outerCircleRadius = 25F
+    internal var outerCircleAndValueSpace = 10F
 
-    var innerCircleRadius = 6F
-    var outerCircleRadius = 25F
-    var outerCircleAndValueSpace = 40F
+    internal var graphStartOffset = 200F
+    internal var graphEndOffset = 100F
+    internal var graphTopOffset = 100F
+    internal var graphBottomOffset = 100F
 
-    private var graphWidthPercent = 1 - (startPaddingPercent + endPaddingPercent)
-    private var graphHeightPercent = 1 - (topPaddingPercent + bottomPaddingPercent)
+    private val graphWidth; get() = screenWidth - graphStartOffset - graphEndOffset
+    private val graphHeight; get() = screenHeight - graphTopOffset - graphBottomOffset
 
-    private val startPadding; get() = screenWidth * startPaddingPercent
-    private val endPadding; get() = screenWidth * endPaddingPercent
-    private val topPadding; get() = (screenHeight * topPaddingPercent).coerceAtMost(100F)
-    private val bottomPadding; get() = (screenHeight * bottomPaddingPercent).coerceAtMost(100F)
-
-    private val graphWidth; get() = screenWidth * graphWidthPercent
-    private val graphHeight; get() = screenHeight * graphHeightPercent
-
-    var extendedYAxisPercent = 0.05F
-    private val extendedYAxisDistance; get() = screenWidth * extendedYAxisPercent
-    private val extendedXAxisDistance; get() = screenWidth * extendedYAxisPercent
+    internal var extendedYAxisDistance = 50F
+    internal var extendedXAxisDistance = 50F
 
     internal val linePaint = Paint().apply {
         isAntiAlias = true
@@ -53,7 +44,7 @@ class HorizontalBarChart : View {
     }
     internal val sampleLinePaint = Paint().apply {
         isAntiAlias = true
-        color = Color.WHITE
+        color = Color.GRAY
         style = Paint.Style.FILL
         strokeWidth = 2F
         strokeCap = Paint.Cap.ROUND
@@ -100,21 +91,17 @@ class HorizontalBarChart : View {
         textAlign = Paint.Align.LEFT
     }
 
-    private val subjectNameList = arrayListOf<String>()
-    private val markList = arrayListOf<String>()
+    internal val graphData = arrayListOf<GraphDataInfo>()
+//    internal val markList = arrayListOf<String>()
 
     private fun setBarGraphData() {
 
         for (i in 0..2) {
-            subjectNameList.add("TELUGU")
-            subjectNameList.add("ENGLISH")
-            subjectNameList.add("HINDI")
-            subjectNameList.add("SCIENCE")
-
-            markList.add(Random().nextInt(100).toString())
-            markList.add(Random().nextInt(100).toString())
-            markList.add(Random().nextInt(100).toString())
-            markList.add(Random().nextInt(100).toString())
+            graphData.add(GraphDataInfoImpl("Telugu", Random().nextInt(100).toFloat()))
+            graphData.add(GraphDataInfoImpl("Hindi", Random().nextInt(100).toFloat()))
+            graphData.add(GraphDataInfoImpl("English", Random().nextInt(100).toFloat()))
+            graphData.add(GraphDataInfoImpl("Science", Random().nextInt(100).toFloat()))
+            graphData.add(GraphDataInfoImpl("Maths", Random().nextInt(100).toFloat()))
         }
     }
 
@@ -158,13 +145,13 @@ class HorizontalBarChart : View {
         val textHalfHeight =
             (yAxisNamePaint.ascent() + yAxisNamePaint.descent()) / 2
 
-        for (index in subjectNameList.indices) {
-            val subject = subjectNameList[index]
-            val yPos = (graphHeight * index) / (subjectNameList.size)
+        for (index in graphData.indices) {
+            val subject = graphData[index].getKey()
+            val yPos = (graphHeight * index) / (graphData.size)
             canvas.drawText(
                 subject,
-                startPadding - 30F,
-                topPadding + yPos - textHalfHeight,
+                graphStartOffset - 30F,
+                graphTopOffset + yPos - textHalfHeight,
                 yAxisNamePaint
             )
         }
@@ -172,10 +159,10 @@ class HorizontalBarChart : View {
 
     private fun drawYLine(canvas: Canvas) {
         canvas.drawLine(
-            startPadding,
-            topPadding - extendedYAxisDistance,
-            startPadding,
-            topPadding + graphHeight,
+            graphStartOffset,
+            graphTopOffset - extendedYAxisDistance,
+            graphStartOffset,
+            graphTopOffset + graphHeight,
             linePaint
         )
     }
@@ -184,12 +171,12 @@ class HorizontalBarChart : View {
 
         for (index in 1..5) {
             val perValue = graphWidth * 0.2F
-            val xPos = startPadding + (perValue * index)
+            val xPos = graphStartOffset + (perValue * index)
             canvas.drawLine(
                 xPos,
-                topPadding - extendedYAxisDistance,
+                graphTopOffset - extendedYAxisDistance,
                 xPos,
-                topPadding + graphHeight,
+                graphTopOffset + graphHeight,
                 sampleLinePaint
             )
         }
@@ -199,10 +186,10 @@ class HorizontalBarChart : View {
     private fun drawXLine(canvas: Canvas) {
 
         canvas.drawLine(
-            startPadding,
-            topPadding + graphHeight,
-            startPadding + graphWidth + extendedXAxisDistance,
-            topPadding + graphHeight,
+            graphStartOffset,
+            graphTopOffset + graphHeight,
+            graphStartOffset + graphWidth + extendedXAxisDistance,
+            graphTopOffset + graphHeight,
             linePaint
         )
     }
@@ -215,12 +202,12 @@ class HorizontalBarChart : View {
         val textHalfHeight =
             (xAxisNamePaint.ascent() + xAxisNamePaint.descent()) / 2
 
-        val yPosEnd = graphHeight + topPadding - lineHeight - (textHalfHeight * 3F)
+        val yPosEnd = graphHeight + graphTopOffset - lineHeight - (textHalfHeight * 3F)
 
         for (index in 0..5) {
             val xName = (index * 10) * 2
             val perValue = graphWidth * 0.2F
-            val xPos = startPadding + (perValue * index)
+            val xPos = graphStartOffset + (perValue * index)
             canvas.drawText(xName.toString(), xPos, yPosEnd, xAxisNamePaint)
         }
     }
@@ -229,30 +216,32 @@ class HorizontalBarChart : View {
         val percent = graphWidth * 0.01F
         val textHeight =
             (marksPointCircleNamePaint.ascent() + marksPointCircleNamePaint.descent()) / 2
+        val circleOccupiedWidth = marksPointPaint.strokeWidth
+
         val yAxisStroke = linePaint.strokeWidth / 2
-        for (index in markList.indices) {
-            val marks = markList[index].toInt()
-            val xPos = startPadding + ((percent * marks) * animatedProgressValue)
-            val yPos = (graphHeight * index) / (subjectNameList.size)
+        for (index in graphData.indices) {
+            val marks = graphData[index].getValue()
+            val xPos = graphStartOffset + ((percent * marks) * animatedProgressValue)
+            val yPos = (graphHeight * index) / (graphData.size)
 
             canvas.drawCircle(
                 xPos,
-                topPadding + yPos,
+                graphTopOffset + yPos,
                 outerCircleRadius,
                 marksPointCirclePaint
             )//Circle
             canvas.drawLine(
-                startPadding + yAxisStroke,
-                topPadding + yPos,
+                graphStartOffset + yAxisStroke,
+                graphTopOffset + yPos,
                 xPos,
-                topPadding + yPos,
+                graphTopOffset + yPos,
                 marksPointCircleLinePaint
             )//Line
-            canvas.drawCircle(xPos, topPadding + yPos, innerCircleRadius, marksPointPaint)//Dot
+            canvas.drawCircle(xPos, graphTopOffset + yPos, innerCircleRadius, marksPointPaint)//Dot
             canvas.drawText(
                 marks.toString(),
-                outerCircleAndValueSpace + xPos,
-                topPadding + yPos - textHeight,
+                xPos + circleOccupiedWidth + outerCircleAndValueSpace,
+                graphTopOffset + yPos - textHeight,
                 marksPointCircleNamePaint
             )//Label
         }
@@ -295,7 +284,7 @@ class HorizontalBarChart : View {
         Log.d("TAG", "onMeasure Before: height: $desiredHeight")
 
         screenWidth = desiredWidth
-        screenHeight = desiredHeight.coerceAtLeast(subjectNameList.size * 150F)
+        screenHeight = desiredHeight.coerceAtLeast(graphData.size * 150F)
         setMeasuredDimension(screenWidth.toInt(), screenHeight.toInt())
 
         Log.d("TAG", "onMeasure After: width: $desiredWidth")
@@ -332,31 +321,51 @@ class HorizontalBarChart : View {
             true
     }
 
+    interface GraphDataInfo {
+        fun getKey(): String
+        fun getValue(): Float
+    }
+    private data class GraphDataInfoImpl(private val myKey: String, val myValue: Float): GraphDataInfo {
+        override fun getKey() = myKey
+        override fun getValue() = myValue
+    }
 }
 
-@BindingAdapter("graphStartOffsetPercent")
-fun HorizontalBarChart.graphStartOffsetPercent(graphStartOffsetPercent: Float) {
-    this.startPaddingPercent = graphStartOffsetPercent
+@BindingAdapter("graphData")
+fun HorizontalBarChart.graphDataAsInfoList(data: List<HorizontalBarChart.GraphDataInfo>) {
+    this.graphData.clear()
+    this.graphData.addAll(data)
+    invalidate()
 }
 
-@BindingAdapter("graphEndOffsetPercent")
-fun HorizontalBarChart.graphEndOffsetPercent(graphEndOffsetPercent: Float) {
-    this.endPaddingPercent = graphEndOffsetPercent
+@BindingAdapter("graphStartOffset")
+fun HorizontalBarChart.graphStartOffset(graphStartOffset: Float) {
+    this.graphStartOffset = graphStartOffset
 }
 
-@BindingAdapter("graphTopOffsetPercent")
-fun HorizontalBarChart.graphTopOffsetPercent(graphTopOffsetPercent: Float) {
-    this.topPaddingPercent = graphTopOffsetPercent
+@BindingAdapter("graphEndOffset")
+fun HorizontalBarChart.graphEndOffset(graphEndOffset: Float) {
+    this.graphEndOffset = graphEndOffset
 }
 
-@BindingAdapter("graphBottomOffsetPercent")
-fun HorizontalBarChart.graphBottomOffsetPercent(graphBottomOffsetPercent: Float) {
-    this.bottomPaddingPercent = graphBottomOffsetPercent
+@BindingAdapter("graphTopOffset")
+fun HorizontalBarChart.graphTopOffset(graphTopOffset: Float) {
+    this.graphTopOffset = graphTopOffset
 }
 
-@BindingAdapter("extendedYAxisPercent")
-fun HorizontalBarChart.extendedYAxisPercent(extendedYAxisPercent: Float) {
-    this.extendedYAxisPercent = extendedYAxisPercent
+@BindingAdapter("graphBottomOffset")
+fun HorizontalBarChart.graphBottomOffset(graphBottomOffset: Float) {
+    this.graphBottomOffset = graphBottomOffset
+}
+
+@BindingAdapter("extendedYAxisDistance")
+fun HorizontalBarChart.extendedYAxisDistance(extendedYAxisDistance: Float) {
+    this.extendedYAxisDistance = extendedYAxisDistance
+}
+
+@BindingAdapter("extendedXAxisDistance")
+fun HorizontalBarChart.extendedXAxisDistance(extendedXAxisDistance: Float) {
+    this.extendedXAxisDistance = extendedXAxisDistance
 }
 
 @BindingAdapter("xAxisTextSize")

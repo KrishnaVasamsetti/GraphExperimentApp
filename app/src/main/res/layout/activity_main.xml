@@ -38,6 +38,8 @@
                 app:outerCircleColor="@{@color/purple_200}"
                 app:outerCircleRadius="@{@dimen/outerCircleRadius}"
                 app:outerCircleStroke="@{@dimen/outerCircleStroke}"
+                app:outerCircleAndValueSpace="@{@dimen/outerCircleValueSpace}"
+                app:axisSampleYLineColor="@{@color/white}"
                 app:valueLineColor="@{@color/purple_700}"
                 app:valueLineStroke="@{@dimen/valueLineStroke}"
                 app:valueTextColor="@{@color/purple_500}"

@@ -8,6 +8,7 @@
     <dimen name="innerCircleRadius">2dp</dimen>
     <dimen name="outerCircleRadius">10dp</dimen>
     <dimen name="outerCircleStroke">3dp</dimen>
+    <dimen name="outerCircleValueSpace">4dp</dimen>
 
     <dimen name="valueLineStroke">2dp</dimen>
     <dimen name="axisLineStroke">5dp</dimen>
