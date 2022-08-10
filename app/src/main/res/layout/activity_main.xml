@@ -8,18 +8,10 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:contentDescription="@string/todo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,17 +23,17 @@
                 app:animationInitialDelay="@{1000}"
                 app:axisLineColor="@{@color/purple_500}"
                 app:axisLineStroke="@{@dimen/axisLineStroke}"
-                app:innerCircleColor="@{@color/purple_200}"
+                app:innerCircleColor="@{@color/red}"
                 app:innerCircleRadius="@{@dimen/innerCircleRadius}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:outerCircleColor="@{@color/purple_200}"
+                app:outerCircleColor="@{@color/black}"
                 app:outerCircleRadius="@{@dimen/outerCircleRadius}"
                 app:outerCircleStroke="@{@dimen/outerCircleStroke}"
                 app:outerCircleAndValueSpace="@{@dimen/outerCircleValueSpace}"
-                app:axisSampleYLineColor="@{@color/white}"
+                app:axisSampleYLineColor="@{@color/purple_500}"
                 app:valueLineColor="@{@color/purple_700}"
                 app:valueLineStroke="@{@dimen/valueLineStroke}"
                 app:valueTextColor="@{@color/purple_500}"
@@ -52,6 +44,5 @@
                 app:yAxisTextSize="@{@dimen/y_axis_text_size}" />
 
         </ScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

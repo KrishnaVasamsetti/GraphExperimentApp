@@ -2,10 +2,10 @@
 <resources>
 
     <dimen name="x_axis_text_size">16sp</dimen>
-    <dimen name="y_axis_text_size">12sp</dimen>
-    <dimen name="value_text_size">10sp</dimen>
+    <dimen name="y_axis_text_size">15sp</dimen>
+    <dimen name="value_text_size">13sp</dimen>
 
-    <dimen name="innerCircleRadius">2dp</dimen>
+    <dimen name="innerCircleRadius">7dp</dimen>
     <dimen name="outerCircleRadius">10dp</dimen>
     <dimen name="outerCircleStroke">3dp</dimen>
     <dimen name="outerCircleValueSpace">4dp</dimen>
