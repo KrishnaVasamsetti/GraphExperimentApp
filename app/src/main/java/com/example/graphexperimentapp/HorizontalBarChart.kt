@@ -31,9 +31,12 @@ class HorizontalBarChart : View {
 
     private val graphWidth; get() = screenWidth - graphStartOffset - graphEndOffset
     private val graphHeight; get() = screenHeight - graphTopOffset - graphBottomOffset
+    private var animatedProgressValue = 1F
 
     internal var extendedYAxisDistance = 50F
     internal var extendedXAxisDistance = 50F
+
+    internal var delayAnimationInMillis = 0L
 
     internal val linePaint = Paint().apply {
         isAntiAlias = true
@@ -291,12 +294,17 @@ class HorizontalBarChart : View {
         Log.d("TAG", "onMeasure After: height: $desiredHeight")
     }
 
-    private var animatedProgressValue = 0F
-
-    private fun startGraphAnimatorOnDelay() {
-        postDelayed({
-            startGraphAnimator()
-        }, 1000)
+    fun startGraphAnimatorOnDelay() {
+        if (delayAnimationInMillis <= 1) {
+            Log.d("TAG", "startGraphAnimatorOnDelay: NOT STARTED delay: $delayAnimationInMillis")
+            animatedProgressValue = 1F
+        } else {
+            Log.d("TAG", "startGraphAnimatorOnDelay: STARTED delay: $delayAnimationInMillis")
+            animatedProgressValue = 0F
+            postDelayed({
+                startGraphAnimator()
+            }, delayAnimationInMillis)
+        }
     }
 
     private fun startGraphAnimator() {
@@ -491,4 +499,9 @@ fun HorizontalBarChart.valueLineColor(@ColorInt valueLineColor: Int) {
 @BindingAdapter("valueTextColor")
 fun HorizontalBarChart.valueTextColor(@ColorInt valueTextColor: Int) {
     this.marksPointCircleNamePaint.color = valueTextColor
+}
+
+@BindingAdapter("animationInitialDelay")
+fun HorizontalBarChart.animationInitialDelay(animationInitialDelay: Int) {
+    this.delayAnimationInMillis = animationInitialDelay.toLong()
 }

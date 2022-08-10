@@ -20,6 +20,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:contentDescription="@string/todo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -27,6 +28,7 @@
                 android:id="@+id/horizontal_barchart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:animationInitialDelay="@{1000}"
                 app:axisLineColor="@{@color/purple_500}"
                 app:axisLineStroke="@{@dimen/axisLineStroke}"
                 app:innerCircleColor="@{@color/purple_200}"

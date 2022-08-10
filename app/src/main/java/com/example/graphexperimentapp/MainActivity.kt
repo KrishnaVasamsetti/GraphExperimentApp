@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 //                GraphInfo("SS", 98f),
 //            )
 //        )
+        binding.horizontalBarchart.startGraphAnimatorOnDelay()
 
     }
 }
