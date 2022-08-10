@@ -332,10 +332,12 @@ class HorizontalBarChart : View {
     interface GraphDataInfo {
         fun getKey(): String
         fun getValue(): Float
+        fun getStatus(): String
     }
-    private data class GraphDataInfoImpl(private val myKey: String, val myValue: Float): GraphDataInfo {
+    private data class GraphDataInfoImpl(private val myKey: String, val myValue: Float, val myStatus: String = ""): GraphDataInfo {
         override fun getKey() = myKey
         override fun getValue() = myValue
+        override fun getStatus() = myStatus
     }
 }
 

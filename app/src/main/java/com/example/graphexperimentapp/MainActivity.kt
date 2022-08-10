@@ -28,8 +28,9 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-private data class GraphInfo(private val myKey: String, val myValue: Float):
+private data class GraphInfo(private val myKey: String, val myValue: Float, val myStatus: String):
     HorizontalBarChart.GraphDataInfo {
     override fun getKey() = myKey
     override fun getValue() = myValue
+    override fun getStatus() = myStatus
 }
